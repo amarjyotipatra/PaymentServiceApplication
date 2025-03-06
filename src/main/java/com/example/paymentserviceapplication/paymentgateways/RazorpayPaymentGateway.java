@@ -23,7 +23,7 @@ public class RazorpayPaymentGateway {
             paymentLinkRequest.put("currency", "INR");
             paymentLinkRequest.put("accept_partial", true);
             paymentLinkRequest.put("first_min_partial_amount", 100);
-            paymentLinkRequest.put("expire_by", 1741355795);
+            paymentLinkRequest.put("expire_by", 1744034195);
             paymentLinkRequest.put("reference_id", orderId);
             paymentLinkRequest.put("description", "Payment for policy no #23456");
             JSONObject customer = new JSONObject();

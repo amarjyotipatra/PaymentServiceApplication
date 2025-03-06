@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
 
     private IPaymentService paymentService;
+    public PaymentController(IPaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+
 
     @PostMapping
     public String intiatiatePayment(@RequestBody PaymentDTO paymentDto){
