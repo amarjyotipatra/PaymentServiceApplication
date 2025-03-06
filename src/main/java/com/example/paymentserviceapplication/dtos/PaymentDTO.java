@@ -7,4 +7,9 @@ import lombok.Setter;
 @Setter
 public class PaymentDTO {
 
+    String email;
+    String name;
+    String phoneNumber;
+    String orderId;
+    Long amount;
 }

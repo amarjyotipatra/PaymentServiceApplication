@@ -14,8 +14,8 @@ public class PaymentController {
     private IPaymentService paymentService;
 
     @PostMapping
-    public String intiatiatePayment(@RequestBody PaymentDTO paymentDTO){
+    public String intiatiatePayment(@RequestBody PaymentDTO paymentDto){
 
-        return paymentService.intiatePayment();
+        return paymentService.intiatePayment(paymentDto.getEmail(),paymentDto.getName(),paymentDto.getPhoneNumber(),paymentDto.getOrderId(),paymentDto.getAmount());
     }
 }
