@@ -1,11 +1,10 @@
 package com.example.paymentserviceapplication.paymentgateways;
 
-import com.razorpay.PaymentLink;
+import com.razorpay.*;
 import org.springframework.stereotype.Component;
 import org.json.JSONObject;
-import com.razorpay.Payment;
-import com.razorpay.RazorpayClient;
-import com.razorpay.RazorpayException;
+
+import java.util.Optional;
 
 @Component
 public class RazorpayPaymentGateway {
@@ -46,6 +45,61 @@ public class RazorpayPaymentGateway {
             return payment.get("short_url").toString();
         } catch(RazorpayException exception) {
             throw new RuntimeException(exception.getMessage());
+        }
+    }
+
+    public String createUpiPaymentOrder(String email, String name, String phoneNumber, String orderId, Long amount, String upiId) {
+        try {
+            // Step 1: Create the order
+            JSONObject orderRequest = new JSONObject();
+            orderRequest.put("amount", amount * 100); // Convert to paise
+            orderRequest.put("currency", "INR");
+            orderRequest.put("receipt", orderId);
+
+            JSONObject orderNotes = new JSONObject();
+            orderNotes.put("email", email);
+            orderNotes.put("name", name);
+            orderNotes.put("upi_id", upiId);
+            orderRequest.put("notes", orderNotes);
+
+            Order order = razorpayClient.orders.create(orderRequest);
+
+            // Step 2: Create a UPI payment link
+            JSONObject paymentLinkRequest = new JSONObject();
+            paymentLinkRequest.put("amount", amount * 100); // Must match order amount
+            paymentLinkRequest.put("currency", "INR");
+            paymentLinkRequest.put("reference_id", orderId);
+            paymentLinkRequest.put("description", "UPI Payment for order " + orderId);
+
+            JSONObject customer = new JSONObject();
+            customer.put("name", name);
+            customer.put("contact", phoneNumber);
+            customer.put("email", email);
+            paymentLinkRequest.put("customer", customer);
+
+            JSONObject notify = new JSONObject();
+            notify.put("sms", true);
+            notify.put("email", true);
+            paymentLinkRequest.put("notify", notify);
+
+            paymentLinkRequest.put("reminder_enable", true);
+            paymentLinkRequest.put("upi_link", true); // Reintroduce to enable UPI
+
+            // Optionally restrict to UPI (if supported)
+            JSONObject paymentMethods = new JSONObject();
+            paymentMethods.put("upi", true);
+            paymentLinkRequest.put("payment_methods", paymentMethods);
+
+            JSONObject paymentNotes = new JSONObject();
+            paymentNotes.put("upi_id", upiId);
+            paymentLinkRequest.put("notes", paymentNotes);
+
+            PaymentLink paymentLink = razorpayClient.paymentLink.create(paymentLinkRequest);
+
+            return paymentLink.get("short_url").toString();
+
+        } catch (RazorpayException exception) {
+            throw new RuntimeException("Failed to create UPI payment link: " + exception.getMessage());
         }
     }
 }

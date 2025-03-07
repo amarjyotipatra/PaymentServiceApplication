@@ -16,4 +16,9 @@ public class PaymentService implements IPaymentService {
     public String intiatePayment(String email,String name, String phoneNumber,String orderId, Long amount) {
         return razorpayPaymentGateway.getPaymentLink(email,name,phoneNumber,orderId,amount);
     }
+
+    @Override
+    public String intiateUpiPayment(String email, String name, String phoneNumber, String orderId, Long amount, String upiId) {
+        return razorpayPaymentGateway.createUpiPaymentOrder(email,name,phoneNumber,orderId,amount,upiId);
+    }
 }

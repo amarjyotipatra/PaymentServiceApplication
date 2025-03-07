@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.razorpay:razorpay-java:1.4.8'
+    implementation 'com.razorpay:razorpay-java:1.4.6'
     implementation 'com.stripe:stripe-java:28.4.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
