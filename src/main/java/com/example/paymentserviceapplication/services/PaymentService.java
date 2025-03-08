@@ -1,24 +1,20 @@
 package com.example.paymentserviceapplication.services;
 
-import com.example.paymentserviceapplication.paymentgateways.RazorpayPaymentGateway;
+import com.example.paymentserviceapplication.paymentgateways.IPaymentGateway;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PaymentService implements IPaymentService {
 
-    private RazorpayPaymentGateway razorpayPaymentGateway;
+    private IPaymentGateway paymentGateway;
 
-    public PaymentService(RazorpayPaymentGateway razorpayPaymentGateway) {
-        this.razorpayPaymentGateway = razorpayPaymentGateway;
+    public PaymentService(IPaymentGateway paymentGateway) {
+        this.paymentGateway = paymentGateway;
     }
 
     @Override
     public String intiatePayment(String email,String name, String phoneNumber,String orderId, Long amount) {
-        return razorpayPaymentGateway.getPaymentLink(email,name,phoneNumber,orderId,amount);
+        return paymentGateway.getPaymentLink(email,name,phoneNumber,orderId,amount);
     }
 
-    @Override
-    public String intiateUpiPayment(String email, String name, String phoneNumber, String orderId, Long amount, String upiId) {
-        return razorpayPaymentGateway.createUpiPaymentOrder(email,name,phoneNumber,orderId,amount,upiId);
-    }
 }
