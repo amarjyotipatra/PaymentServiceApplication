@@ -98,14 +98,3 @@ This is a Spring Boot-based microservice designed to handle payment operations, 
 *   **Stripe Webhooks:** The `WebhookController` handles incoming events from Stripe.
 * **Security**: Make sure to secure your webhook endpoint.
 
-## Contributing
-
-_(Add guidelines for contributing if you plan to accept external contributions.)_
-
-## Further Documentation
-
-*   [Official Gradle documentation](https://docs.gradle.org)
-*   [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/3.4.2/gradle-plugin)
-*   [Spring Boot Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
-*   [Razorpay Java SDK](https://razorpay.com/docs/payments/payments/java/)
-* [Stripe documentation](https://stripe.com/docs)
